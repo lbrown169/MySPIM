@@ -15,10 +15,7 @@ int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
     if (PC % 4 != 0) {
         return 1;
     }
-    unsigned start_address = PC >> 2;
-    for (int i = 0; i < 4; i++) {
-        *instruction = (*instruction << 8) + Mem[start_address + i];
-    }
+    *instruction = Mem[PC >> 2];
     return 0;
 }
 
