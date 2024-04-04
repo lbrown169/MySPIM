@@ -12,7 +12,13 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 /* 10 Points */
 int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 {
-
+    // Halt if the program counter is not word-aligned
+    if (PC % 4 != 0) {
+        return 1;
+    }
+    // Divide PC by 4 (bit shift by 2) since it is word-aligned. Load into instruction pointer
+    *instruction = Mem[PC >> 2];
+    return 0;
 }
 
 
