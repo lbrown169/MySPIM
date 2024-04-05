@@ -55,7 +55,7 @@ void sign_extend(unsigned offset,unsigned *extended_value)
         *extended_value = offset | 0xFFFF0000;
     } else {
         // Otherwise, just extend the zeroes to the left
-        *extended_value = offset | 0x00000000;
+        *extended_value = offset & 0x0000FFFF;
     }
 }
 
