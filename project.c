@@ -50,7 +50,13 @@ void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigne
 /* 10 Points */
 void sign_extend(unsigned offset,unsigned *extended_value)
 {
-
+    if ((offset >> 15) & 0b1) {
+        // If the MSB of the 16 bit offset is 1, extend the 1's to the left
+        *extended_value = offset | 0xFFFF0000;
+    } else {
+        // Otherwise, just extend the zeroes to the left
+        *extended_value = offset & 0x0000FFFF;
+    }
 }
 
 /* ALU operations */
