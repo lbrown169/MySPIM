@@ -41,8 +41,13 @@ int instruction_decode(unsigned op,struct_controls *controls)
 /* Read Register */
 /* 5 Points */
 void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigned *data2)
-{
+{   
 
+    //use r1 as an index for array REG and store in in data 1 
+    *data1 = Reg[r1];
+
+    //same thing but for data 2 
+    *data2 = Reg[r2];
 }
 
 
