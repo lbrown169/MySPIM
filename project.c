@@ -5,7 +5,59 @@
 /* 10 Points */
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
+    int x = (int) ALUControl;      //turns the ALUControl into an int
 
+    // Checks the ALU control and does the operation based on it
+    switch (x) {
+
+    case 0:
+        *ALUresult = B+A;       //if it is 0 then we add.
+        break;
+    case 2:     
+        if (B > A)          //if A < B, Z = 1; otherwise, Z = 0
+            *ALUresult = 1;
+        else
+            *ALUresult = 0;
+        break;
+    case 3:
+        if (A < B)               //if A < B, Z = 1; otherwise, Z = 0 (A and B are unsigned integers)
+            *ALUresult = 1;
+        else
+            *ALUresult = 0;
+        break;
+    case 1:
+        *ALUresult = A - B;     //Z = A – B
+        break;
+    case 4:
+        if (A & B)      //do we use logical && or just & @loganPaul
+            *ALUresult = 1; 
+        else
+            *ALUresult = 0;
+        break;
+    case 5:
+        if (A | B)      // Should we use bitwise operator: | or logical: || logan paul?
+            *ALUresult = 1; 
+        else               
+            *ALUresult = 0; 
+        break;
+    case 6:
+        *ALUresult = B << 16;       //shifting 16 bits to the left
+        break;
+    case 7:                 
+        if (A == 1)     //if A is true then we put NOT A, 1 -> 0
+            *ALUresult = 0;
+        else            //if A is false then we put NOT A, 0 -> 1
+            *ALUresult = 1;
+        break;
+
+    }
+
+    //....... 3. Assign Zero to 1 if the result is zero; otherwise, assign 0. <--instructions on assignment
+
+    if (*ALUresult == 0)
+        *Zero = 1;
+    else
+        *Zero = 0;
 }
 
 /* instruction fetch */
