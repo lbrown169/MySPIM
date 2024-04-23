@@ -88,7 +88,7 @@ int instruction_decode(unsigned op,struct_controls *controls)
             controls->Branch = 1;
             controls->MemRead = 0;
             controls->MemtoReg = 2;
-            controls->ALUOp=6;
+            controls->ALUOp=1;
             controls->MemWrite = 0;
             controls->ALUSrc = 0;
             controls->RegWrite = 0;
