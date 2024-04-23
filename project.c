@@ -257,7 +257,18 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
 /* 10 Points */
 int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsigned *memdata,unsigned *Mem)
 {
-
+    if (MemRead == 1) {
+        // Halt if not word aligned
+        if (ALUresult % 4 != 0) return 1;
+        // Bit shift ALUresult to what we need it for Mem, read into memdata
+        *memdata = Mem[ALUresult >> 2];
+    } else if (MemWrite == 1) {
+        // Halt if not word aligned
+        if (ALUresult % 4 != 0) return 1;
+        // Bit shift ALUresult like above, but now write to Mem
+        Mem[ALUresult >> 2] = data2;
+    }
+    return 0;
 }
 
 
