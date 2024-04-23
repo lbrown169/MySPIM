@@ -36,9 +36,9 @@ void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsi
     *(r3)=(instruction>>11)&0b11111;
     // bits range 5-0
     *(funct)=(instruction)&0b111111;
-    // bits range 16-0
+    // bits range 15-0
     *(offset)=(instruction)&0b1111111111111111;
-    // bits range 26-0
+    // bits range 25-0
     *(jsec)=(instruction)&0b11111111111111111111111111;
 }
 
@@ -227,6 +227,12 @@ void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,
 /* 10 Points */
 void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char Zero,unsigned *PC)
 {
-
+    *PC = *PC + 4;
+    if (Branch = 1 && Zero == 1) {
+        *PC = *PC + (extended_value << 2);
+    } else if (Jump == 1) {
+        // Create PC using the jsec bit shifted twice, and grabbing the upper 4 buts of PC
+        *PC = (jsec << 2) | (PC & 0xF0000000);
+    }
 }
 
