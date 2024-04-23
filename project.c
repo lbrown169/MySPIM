@@ -38,7 +38,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
         *ALUresult = B << 16;       //shifting 16 bits to the left
         break;
     case 7:  
-        *ALUresult = ~(A == 1);             
+        *ALUresult = ~A;             
             //if A is true then we put NOT A, 1 -> 0
             //if A is false then we put NOT A, 0 -> 1
         break;
