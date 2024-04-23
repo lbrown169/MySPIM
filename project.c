@@ -250,7 +250,47 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 /* 10 Points */
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
-
+    // There is already an ALU operation defined from instruction_decode. We'll pass that
+    if (ALUOp != 0) {
+        if (ALUSrc == 1) {
+            ALU(data1, extended_value, ALUOp, ALUresult, Zero);
+        } else {
+            ALU(data1, data2, ALUOp, ALUresult, Zero);
+        }
+    } else {
+        switch (funct) {
+            // add
+            case 0b100000:
+                ALU(data1, data2, 000, ALUresult, Zero);
+                break;
+            // subtract
+            case 0b100010:
+                ALU(data1, data2, 001, ALUresult, Zero);
+                break;
+            // and
+            case 0b100100:
+                ALU(data1, data2, 100, ALUresult, Zero);
+                break;
+            // or
+            case 0b100101:
+                ALU(data1, data2, 101, ALUresult, Zero);
+                break;
+            // slt
+            case 0b101010:
+                ALU(data1, data2, 010, ALUresult, Zero);
+                break;
+            // sltu
+            case 0b101011:
+                ALU(data1, data2, 011, ALUresult, Zero);
+                break;
+            // No r-type instruction matched. Halt
+            default:
+                return 1;
+                break;
+        }
+    }
+    // Reached end. No halt occurred
+    return 0;
 }
 
 /* Read / Write Memory */
